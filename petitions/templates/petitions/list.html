@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% load static %}
+  <div class="p-3">
+    <div class="container">
+      <div class="row mt-3">
+        <div class="col-md-8 mx-auto mb-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <h2 class="mb-0">Petitions</h2>
+            <a class="btn bg-dark text-white" href="{% url 'petition_create' %}">
+              New Petition
+            </a>
+          </div>
+          <hr/>
+
+          <p class="text-muted">
+            Create a petition to ask the store to include a movie. Other users can up-vote with one click.
+          </p>
+
+          {% if petitions %}
+            <ul class="list-group shadow-sm rounded">
+              {% for p in petitions %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div class="me-3">
+                    <a class="fw-semibold text-decoration-none" href="{% url 'petition_detail' p.pk %}">
+                      {{ p.title }}
+                    </a>
+                    {% if p.description %}
+                      <div class="small text-muted text-truncate" style="max-width: 520px;">
+                        {{ p.description }}
+                      </div>
+                    {% endif %}
+                  </div>
+                  <span class="badge text-bg-success rounded-pill">
+                    Upvotes: {{ p.yes_count }}
+                  </span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <div class="alert alert-light border d-flex align-items-center" role="alert">
+              No petitions yet — be the first to start one!
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
