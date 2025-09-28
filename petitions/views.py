@@ -11,7 +11,7 @@ def petition_detail(request, pk):
     petition = get_object_or_404(Petition, pk=pk)
     return render(request, "petitions/detail.html", {"petition": petition})
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='accounts.login')
 def petition_create(request):
     if request.method == "POST":
         form = PetitionForm(request.POST)
@@ -24,7 +24,7 @@ def petition_create(request):
         form = PetitionForm()
     return render(request, "petitions/form.html", {"form": form})
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='accounts.login')
 def petition_vote(request, pk):
     petition = get_object_or_404(Petition, pk=pk)
     PetitionVote.objects.get_or_create(petition=petition, user=request.user, defaults={"vote": True})
